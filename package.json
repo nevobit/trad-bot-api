@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API project for managing accounts, bots, and users.",
+  "main": "build/server/index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/server/index.ts",
+    "start": "node build/server/index.js",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "Alessandro",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "mongoose": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}
