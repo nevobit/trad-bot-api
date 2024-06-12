@@ -7,9 +7,10 @@ export const updateBotRoute: RouteOptions = {
   url: "/bots/:id",
   handler: async (request, reply) => {
     const { params } = request;
-    const { _id } = params as { _id: string };
+    const { id } = params as { id: string };
     const data = request.body as Partial<Bot>;
-    const bots = await updateBot({ ...data, _id });
+    console.log("EN LA RUTA", id);
+    const bots = await updateBot({ ...data, id });
     reply.status(200).send(bots);
   },
 };
