@@ -3,6 +3,8 @@ import fastify from "fastify";
 import { initDataSources } from "../data-sources";
 import { registerRoutes } from "../routes";
 import fastifyCors from "@fastify/cors";
+import fastifyJwt from "@fastify/jwt";
+import fastifyCookie from "@fastify/cookie";
 
 const { PORT, HOST, MONGODB_URL } = process.env;
 const corsOptions = {
@@ -17,7 +19,23 @@ const main = async () => {
   });
 
   const app = fastify();
+
+  app.register(fastifyJwt, {
+    secret: 'supersecretcode',
+  })
+
   app.register(fastifyCors, corsOptions);
+
+  app.addHook('preHandler', (request, response, next) => {
+    request.jwt = app.jwt
+    return next();
+  })
+
+  app.register(fastifyCookie, {
+    secret: 'the-secret-key',
+    hook: 'preHandler'
+  })
+
   app.register(
     (instance, options, next) => {
       registerRoutes(instance);
