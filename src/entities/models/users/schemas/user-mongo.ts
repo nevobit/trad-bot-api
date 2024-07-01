@@ -5,6 +5,7 @@ import { User } from './user';
 export const UserSchemaMongo = new Schema<User>({
     _id: { type: String, unique: true, default: () => crypto.randomUUID() },
     username: { type: String },
+    email: { type: String, unique: true },
     password: { type: String, },
 },{
     versionKey: false,

@@ -8,3 +8,13 @@ export const createUser = async (data: Partial<User>) => {
   await account.save();
   return account;
 };
+
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  const model = getModel(Collection.USERS, UserSchemaMongo);
+  return model.findOne({ email });
+}
+
+export const findUserByUsername = async (username: string): Promise<User | null> => {
+  const model = getModel(Collection.USERS, UserSchemaMongo);
+  return model.findOne({ username });
+}
