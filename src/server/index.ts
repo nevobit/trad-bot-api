@@ -5,6 +5,7 @@ import { registerRoutes } from "../routes";
 import fastifyCors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
+import fastifyWebsocket from "@fastify/websocket";
 
 const { PORT, HOST, MONGODB_URL } = process.env;
 const corsOptions = {
@@ -25,6 +26,7 @@ const main = async () => {
   })
 
   app.register(fastifyCors, corsOptions);
+  app.register(fastifyWebsocket);
 
   app.addHook('preHandler', (request, response, next) => {
     request.jwt = app.jwt
@@ -43,6 +45,16 @@ const main = async () => {
     },
     { prefix: "api/v1" }
   );
+
+  app.register(async function (fastify) {
+    fastify.get('/ws', { websocket: true }, (connection, req) => {
+      connection.socket.on('message', (message: { toString: () => any; }) => {
+        console.log('Received message:', message.toString());
+      });
+
+      connection.socket.send('Welcome to the WebSocket server!');
+    });
+  });
 
   app.listen({ port: Number(PORT), host: HOST }, () => {
     console.log("Server running on port", PORT);
