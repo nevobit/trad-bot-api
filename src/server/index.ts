@@ -62,3 +62,7 @@ const main = async () => {
 };
 
 void main();
+
+PORT=7000
+HOST=0.0.0.0
+MONGODB_URL=mongodb+srv://nevobit:nadanosdetiene100@cluster0.o3dp4kl.mongodb.net/cpbotdb?retryWrites=true&w=majority
