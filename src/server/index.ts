@@ -48,11 +48,13 @@ const main = async () => {
 
   app.register(async function (fastify) {
     fastify.get('/ws', { websocket: true }, (connection, req) => {
-      connection.socket.on('message', (message: { toString: () => any; }) => {
-        console.log('Received message:', message.toString());
+      connection.on('message', (message: { toString: () => any; }) => {
+        if(message.toString() == "hola"){
+            connection.send('Que más pues!');
+        }
       });
 
-      connection.socket.send('Welcome to the WebSocket server!');
+      connection.send('Bot websocket server!');
     });
   });
 
